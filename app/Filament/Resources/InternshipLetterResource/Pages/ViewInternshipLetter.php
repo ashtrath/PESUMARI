@@ -31,7 +31,7 @@ class ViewInternshipLetter extends ViewRecord
                     TextEntry::make('submission_date')
                         ->label('Tanggal Penyerahan')
                         ->date('d F Y'),
-                    TextEntry::make('approval-date')
+                    TextEntry::make('approval_date')
                         ->label('Tanggal Persetujuan')
                         ->placeholder('-')
                         ->date('d F Y'),
