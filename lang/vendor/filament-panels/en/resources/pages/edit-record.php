@@ -11,11 +11,11 @@ return [
         'actions' => [
 
             'cancel' => [
-                'label' => 'Cancel',
+                'label' => 'Batal',
             ],
 
             'save' => [
-                'label' => 'Save changes',
+                'label' => 'Simpan perubahan',
             ],
 
         ],
@@ -33,7 +33,7 @@ return [
     'notifications' => [
 
         'saved' => [
-            'title' => 'Saved',
+            'title' => 'Berhasil disimpan',
         ],
 
     ],

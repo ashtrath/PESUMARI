@@ -7,6 +7,6 @@ return [
         'placeholder' => 'Search',
     ],
 
-    'no_results_message' => 'No search results found.',
+    'no_results_message' => 'Tidak ada hasil pencarian yang ditemukan.',
 
 ];

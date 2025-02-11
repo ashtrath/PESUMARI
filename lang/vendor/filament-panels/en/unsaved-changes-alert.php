@@ -2,6 +2,6 @@
 
 return [
 
-    'body' => 'You have unsaved changes. Are you sure you want to leave this page?',
+    'body' => 'Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin meninggalkan halaman ini?',
 
 ];

@@ -2,24 +2,24 @@
 
 return [
 
-    'title' => 'Create :label',
+    'title' => 'Buat :label',
 
-    'breadcrumb' => 'Create',
+    'breadcrumb' => 'Buat',
 
     'form' => [
 
         'actions' => [
 
             'cancel' => [
-                'label' => 'Cancel',
+                'label' => 'Batal',
             ],
 
             'create' => [
-                'label' => 'Create',
+                'label' => 'Buat',
             ],
 
             'create_another' => [
-                'label' => 'Create & create another',
+                'label' => 'Buat & buat lainnya',
             ],
 
         ],
@@ -29,7 +29,7 @@ return [
     'notifications' => [
 
         'created' => [
-            'title' => 'Created',
+            'title' => 'Berhasil dibuat',
         ],
 
     ],
