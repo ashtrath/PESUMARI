@@ -12,6 +12,13 @@ class StudyProgram extends Model
         'description',
     ];
 
+    public function students()
+    {
+        return $this->users()->whereHas('roles', function ($query) {
+            $query->where('name', 'mahasiswa');
+        });
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

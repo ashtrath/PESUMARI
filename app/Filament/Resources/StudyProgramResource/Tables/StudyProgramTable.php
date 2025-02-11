@@ -21,11 +21,11 @@ class StudyProgramTable extends TableBuilder
 
             TextColumn::make('description')
                 ->label('Deskripsi'),
-            TextColumn::make('users_count')
+            TextColumn::make('students_count')
                 ->label('Jumlah Mahasiswa')
                 ->alignCenter()
                 ->sortable()
-                ->counts('users')
+                ->counts('students')
         ])
             ->actions([
                 EditAction::make()->hiddenLabel()->tooltip('Edit'),
