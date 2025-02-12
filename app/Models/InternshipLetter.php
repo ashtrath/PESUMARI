@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 
 class InternshipLetter extends Model
 {
@@ -38,32 +39,41 @@ class InternshipLetter extends Model
         return $this->belongsTo(User::class, 'officer_id');
     }
 
-    public function comments(): HasMany
+    public function updateStatus(LetterStatus $status, int $approverId, ?string $reason = null): bool
     {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function updateStatus(LetterStatus $status, ?int $approverId = null): bool
-    {
-        return DB::transaction(function () use ($status, $approverId) {
+        return DB::transaction(function () use ($status, $approverId, $reason) {
             $this->status = $status;
 
-            match ($status) {
-                LetterStatus::APPROVED => $this->approval_date = now(),
-                LetterStatus::PRINTED => $this->processing_date = now(),
-                default => null,
-            };
+            switch ($status) {
+                case LetterStatus::APPROVED:
+                    $this->approval_date = now();
+                    $this->kaprodi_id = $approverId;
+                    break;
 
-            if ($approverId) {
-                match ($status) {
-                    LetterStatus::APPROVED, LetterStatus::REJECTED => $this->kaprodi_id = $approverId,
-                    LetterStatus::PRINTED => $this->officer_id = $approverId,
-                    default => null,
-                };
+                case LetterStatus::PRINTED:
+                    $this->processing_date = now();
+                    $this->officer_id = $approverId;
+                    break;
+
+                case LetterStatus::REJECTED:
+                    $this->kaprodi_id = $approverId;
+                    if (empty($reason)) {
+                        throw new InvalidArgumentException('A rejection reason is required when rejecting a letter.');
+                    }
+                    $this->comments()->create(['comment' => $reason, 'user_id' => $approverId]);
+                    break;
+
+                default:
+                    break;
             }
 
             return $this->save();
         });
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'letter_id');
     }
 
     protected function casts(): array

@@ -6,6 +6,7 @@ use App\Enum\LetterStatus;
 use App\Filament\Resources\InternshipLetterResource;
 use App\Models\InternshipLetter;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -67,8 +68,19 @@ class ViewInternshipLetter extends ViewRecord
                 ->label('Tolak')
                 ->color('danger')
                 ->icon('heroicon-m-x-mark')
-                ->action(fn(InternshipLetter $record) => $record->updateStatus(LetterStatus::REJECTED, auth()->id()))
-                ->visible(auth()->user()->hasPermissionTo('accept_internship::letter')),
+                ->action(function (array $data, InternshipLetter $record) {
+                    $record->updateStatus(LetterStatus::REJECTED, auth()->id(), $data['comment']);
+                })
+                ->modalHeading('Tolak Surat Magang')
+                ->modalDescription('Berikan alasan penolakan atau revisi yang diperlukan')
+                ->form([
+                    Textarea::make('comment')
+                        ->label('Alasan Penolakan/Revisi')
+                        ->required()
+                        ->placeholder('Contoh: Data perusahaan tidak lengkap, durasi magang tidak sesuai...')
+                        ->rows(5)
+                ])
+                ->visible(auth()->user()->hasPermissionTo('reject_internship::letter') && $this->record->status === LetterStatus::PENDING),
         ];
     }
 }
