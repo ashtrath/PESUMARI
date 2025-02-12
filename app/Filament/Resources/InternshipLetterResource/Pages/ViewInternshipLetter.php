@@ -62,7 +62,7 @@ class ViewInternshipLetter extends ViewRecord
                 ->color('success')
                 ->icon('heroicon-m-check')
                 ->action(fn(InternshipLetter $record) => $record->updateStatus(LetterStatus::APPROVED, auth()->id()))
-                ->visible(auth()->user()->hasPermissionTo('accept_internship::letter')),
+                ->visible(auth()->user()->hasPermissionTo('accept_internship::letter') && $this->record->status === LetterStatus::PENDING),
             Action::make('reject')
                 ->label('Tolak')
                 ->color('danger')
