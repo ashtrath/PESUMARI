@@ -3,15 +3,13 @@
 namespace App\Filament\Resources\InternshipLetterResource\Tables;
 
 use App\Models\InternshipLetter;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use TomatoPHP\FilamentHelpers\Contracts\TableBuilder;
 
-class InternshipLetterTable extends TableBuilder
+class KaprodiInternshipLetterTable extends TableBuilder
 {
     public function table(Table $table): Table
     {
@@ -27,22 +25,26 @@ class InternshipLetterTable extends TableBuilder
                 ->label('Tanggal Penyerahan')
                 ->date('d F Y')
                 ->sortable(),
+            TextColumn::make('status')
+                ->badge(),
             TextColumn::make('approval_date')
                 ->label('Tanggal Persetujuan')
                 ->placeholder('-')
                 ->date('d F Y')
                 ->sortable(),
-            TextColumn::make('status')
-                ->badge(),
+            TextColumn::make('comments.comment')
+                ->label('Alasan/Catatan')
+                ->placeholder('-')
+                ->searchable()
         ])
+            ->modifyQueryUsing(function (Builder $query) {
+                return $query->whereHas('student.user', function (Builder $query) {
+                    $query->where('study_program_id', auth()->user()->study_program_id);
+                });
+            })
             ->actions([
                 ViewAction::make()->hiddenLabel()->tooltip('Detail'),
-                DeleteAction::make()->hiddenLabel()->tooltip('Delete'),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 }

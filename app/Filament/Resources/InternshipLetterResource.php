@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InternshipLetterResource\Forms\InternshipLetterForm;
 use App\Filament\Resources\InternshipLetterResource\Pages;
-use App\Filament\Resources\InternshipLetterResource\Tables\InternshipLetterTable;
+use App\Filament\Resources\InternshipLetterResource\Tables\AdminInternshipLetterTable;
+use App\Filament\Resources\InternshipLetterResource\Tables\KaprodiInternshipLetterTable;
+use App\Filament\Resources\InternshipLetterResource\Tables\StudentInternshipLetterTable;
 use App\Models\InternshipLetter;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Form;
@@ -30,7 +32,15 @@ class InternshipLetterResource extends Resource implements HasShieldPermissions
 
     public static function table(Table $table): Table
     {
-        return InternshipLetterTable::make($table);
+        if (auth()->user()->hasRole('admin')) {
+            return AdminInternshipLetterTable::make($table);
+        }
+
+        if (auth()->user()->hasRole('kaprodi')) {
+            return KaprodiInternshipLetterTable::make($table);
+        }
+
+        return StudentInternshipLetterTable::make($table);
     }
 
     public static function getPages(): array
