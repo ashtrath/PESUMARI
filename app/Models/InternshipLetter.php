@@ -11,6 +11,8 @@ use InvalidArgumentException;
 
 class InternshipLetter extends Model
 {
+    public const CREATED_AT = 'submission_date';
+
     public $timestamps = false;
 
     protected $fillable = [

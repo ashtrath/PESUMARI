@@ -15,11 +15,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->foreignId('study_program_id')->nullable()->constrained('study_programs')->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
-
-            $table->index('study_program_id');
         });
 
         Schema::create('sessions', function (Blueprint $table) {
