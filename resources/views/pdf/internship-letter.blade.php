@@ -99,7 +99,7 @@
     <div class="mt-10 text-right">
         <p>Hormat kami,</p>
         <div class="w-32 h-14 ml-auto my-4">
-            @inlinedImage(public_path('/storage/signature.jpg'))
+            @inlinedImage(public_path('/images/signature.jpg'))
         </div>
         <p class="underline">Hj. Nani Cahyani, Dra., M.Si.</p>
         <p>Kepala Career Development Center</p>
