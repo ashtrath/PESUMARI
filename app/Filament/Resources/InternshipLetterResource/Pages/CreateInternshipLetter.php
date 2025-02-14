@@ -17,6 +17,8 @@ class CreateInternshipLetter extends CreateRecord
 
     protected static bool $canCreateAnother = false;
 
+    protected static ?string $title = 'Buat Surat Magang Individu';
+
     public function showPreview(): StreamedResponse
     {
         $this->form->validate();

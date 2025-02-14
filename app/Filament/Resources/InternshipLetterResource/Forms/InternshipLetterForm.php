@@ -18,6 +18,38 @@ class InternshipLetterForm extends FormBuilder
     {
         return $form->schema([
             Section::make()->schema([
+                Fieldset::make('Detail Magang')->schema([
+                    TextInput::make('company_name')
+                        ->label('Nama Perusahaan')
+                        ->prefixIcon('heroicon-o-building-office-2')
+                        ->maxLength(255)
+                        ->columnSpan('full')
+                        ->required(),
+                    TextInput::make('company_address')
+                        ->label('Alamat Perusahaan')
+                        ->prefixIcon('heroicon-o-map-pin')
+                        ->maxLength(255)
+                        ->columnSpan('full')
+                        ->required(),
+                    DatePicker::make('internship_start_month')
+                        ->label('Bulan Mulai Magang')
+                        ->prefixIcon('heroicon-o-calendar-days')
+                        ->native(false)
+                        ->default(now())
+                        ->minDate(now()->startOfDay())
+                        ->locale('id')
+                        ->displayFormat('F, Y')
+                        ->required(),
+                    TextInput::make('internship_duration')
+                        ->label('Durasi Magang (Bulan)')
+                        ->prefixIcon('heroicon-o-clock')
+                        ->suffix('Bulan')
+                        ->numeric()
+                        ->minValue(1)
+                        ->maxValue(12)
+                        ->default(3)
+                        ->required(),
+                ]),
                 Fieldset::make('Informasi Mahasiswa/i')->schema([
                     TextInput::make('name')
                         ->label('Nama Lengkap')
@@ -63,38 +95,6 @@ class InternshipLetterForm extends FormBuilder
                         ->default(auth()->user()->email)
                         ->required(),
                 ]),
-                Fieldset::make('Detail Magang')->schema([
-                    TextInput::make('company_name')
-                        ->label('Nama Perusahaan')
-                        ->prefixIcon('heroicon-o-building-office-2')
-                        ->maxLength(255)
-                        ->columnSpan('full')
-                        ->required(),
-                    TextInput::make('company_address')
-                        ->label('Alamat Perusahaan')
-                        ->prefixIcon('heroicon-o-map-pin')
-                        ->maxLength(255)
-                        ->columnSpan('full')
-                        ->required(),
-                    DatePicker::make('internship_start_month')
-                        ->label('Bulan Mulai Magang')
-                        ->prefixIcon('heroicon-o-calendar-days')
-                        ->native(false)
-                        ->default(now())
-                        ->minDate(now()->startOfDay())
-                        ->locale('id')
-                        ->displayFormat('F, Y')
-                        ->required(),
-                    TextInput::make('internship_duration')
-                        ->label('Durasi Magang (Bulan)')
-                        ->prefixIcon('heroicon-o-clock')
-                        ->suffix('Bulan')
-                        ->numeric()
-                        ->minValue(1)
-                        ->maxValue(12)
-                        ->default(3)
-                        ->required(),
-                ])
             ])->columnSpan(2),
             Section::make('Metadata Surat')->schema([
                 TextInput::make('letter_number')

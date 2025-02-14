@@ -48,6 +48,7 @@ class InternshipLetterResource extends Resource implements HasShieldPermissions
         return [
             'index' => Pages\ListInternshipLetters::route('/'),
             'create' => Pages\CreateInternshipLetter::route('/create'),
+            'createGroup' => Pages\CreateGroupInternshipLetter::route('/create-group'),
             'view' => Pages\ViewInternshipLetter::route('/{record}'),
         ];
     }
